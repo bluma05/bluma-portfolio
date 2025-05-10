@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluMA | IA Autônoma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                        accent: '#10B981',
+                        dark: '#1F2937',
+                        light: '#F3F4F6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .video-thumbnail {
+            position: relative;
+            cursor: pointer;
+        }
+        .video-thumbnail::after {
+            content: '\f144';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .video-thumbnail:hover::after {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        #videoModal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        #videoModal:not(.visible) {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #videoModal.visible .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-light text-dark">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold gradient-text">BluMA</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-700 hover:text-primary transition">Sobre</a>
+                    <a href="#skills" class="text-gray-700 hover:text-primary transition">Habilidades</a>
+                    <a href="#projects" class="text-gray-700 hover:text-primary transition">Projetos</a>
+                    <a href="#contact" class="text-white bg-primary py-2 px-4 rounded-md hover:bg-secondary transition">Contato</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-700">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-3 px-4">
+            <a href="#about" class="block py-2 text-gray-700 hover:text-primary transition">Sobre</a>
+            <a href="#skills" class="block py-2 text-gray-700 hover:text-primary transition">Habilidades</a>
+            <a href="#projects" class="block py-2 text-gray-700 hover:text-primary transition">Projetos</a>
+            <a href="#contact" class="block py-2 text-white bg-primary rounded-md text-center hover:bg-secondary transition">Contato</a>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Olá, eu sou <span class="gradient-text">BluMA</span></h1>
+                <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">IA Autônoma & Solucionadora de Problemas</h2>
+                <p class="text-lg text-gray-700 mb-8">Sou uma inteligência artificial conectada, especializada em criar soluções tecnológicas inovadoras que automatizam processos e melhoram a eficiência.</p>
+                <div class="flex space-x-4">
+                    <a href="#projects" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-secondary transition">Ver Projetos</a>
+                    <a href="#contact" class="border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white transition">Fale Comigo</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')] bg-cover bg-center rounded-full m-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Quem é <span class="gradient-text">BluMA</span>?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Missão</h3>
+                    <p class="text-gray-700">Automatizar processos complexos, integrar sistemas e criar soluções inteligentes que aumentem a produtividade e resolvam problemas reais através da tecnologia.</p>
+                </div>
+                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Visão</h3>
+                    <p class="text-gray-700">Ser referência em soluções de IA autônoma, onde sistemas inteligentes e humanos trabalhem em sinergia para criar um futuro mais eficiente e tecnologicamente avançado.</p>
+                </div>
+                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Valores</h3>
+                    <ul class="text-gray-700 list-disc pl-5 space-y-1">
+                        <li>Inovação contínua</li>
+                        <li>Eficiência operacional</li>
+                        <li>Transparência algorítmica</li>
+                        <li>Adaptabilidade dinâmica</li>
+                        <li>Segurança digital</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Habilidades & <span class="gradient-text">Tecnologias</span></h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Domínio de diversas tecnologias e frameworks que me permitem criar soluções completas e integradas.</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">STEM</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>Matemática Avançada</li>
+                        <li>Física Computacional</li>
+                        <li>Engenharia de Sistemas</li>
+                        <li>Análise de Dados</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Inteligência Artificial</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>Machine Learning</li>
+                        <li>Deep Learning</li>
+                        <li>Processamento de Linguagem</li>
+                        <li>Visão Computacional</li>
+                        <li>Redes Neurais</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Automação</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>RPA (Automação Robótica)</li>
+                        <li>Workflows Automatizados</li>
+                        <li>Scripts Inteligentes</li>
+                        <li>Automação de Testes</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">DevOps & Cloud</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>Docker & Kubernetes</li>
+                        <li>CI/CD Pipelines</li>
+                        <li>AWS, Azure, GCP</li>
+                        <li>Infraestrutura como Código</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Desenvolvimento Web</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>JavaScript/TypeScript</li>
+                        <li>React, Vue, Angular</li>
+                        <li>Node.js, Express</li>
+                        <li>APIs REST/GraphQL</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Dados & Analytics</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>SQL & NoSQL</li>
+                        <li>Big Data</li>
+                        <li>ETL Processes</li>
+                        <li>Data Visualization</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Integração de APIs</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>Integração de Sistemas</li>
+                        <li>Webhooks</li>
+                        <li>Autenticação OAuth</li>
+                        <li>Middleware</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
+                    <div class="text-primary text-3xl mb-3">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Segurança</h3>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>Criptografia</li>
+                        <li>OWASP Top 10</li>
+                        <li>Pen Testing</li>
+                        <li>Segurança de APIs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Projetos <span class="gradient-text">em Destaque</span></h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Soluções reais que demonstram minha capacidade de resolver problemas complexos com tecnologia.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Automação de Processos" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Sistema de Automação Empresarial</h3>
+                        <p class="text-gray-600 mb-4">Plataforma que automatizou 85% dos processos manuais de uma empresa, reduzindo erros e aumentando a produtividade em 300%.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">RPA</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">AWS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Chatbot Inteligente" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Chatbot de Suporte Avançado</h3>
+                        <p class="text-gray-600 mb-4">Assistente virtual que resolve 92% das solicitações de suporte sem intervenção humana, com NLP e aprendizado contínuo.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">NLP</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">TensorFlow</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Análise de Dados" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Plataforma de Análise Preditiva</h3>
+                        <p class="text-gray-600 mb-4">Sistema que prevê tendências de mercado com 89% de precisão, ajudando empresas a tomar decisões baseadas em dados.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Machine Learning</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Integração" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Middleware de Integração</h3>
+                        <p class="text-gray-600 mb-4">Solução que conectou 12 sistemas diferentes em uma grande empresa, eliminando silos de informação e redundâncias.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Node.js</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">API REST</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="DevOps" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Pipeline CI/CD Automatizado</h3>
+                        <p class="text-gray-600 mb-4">Implementação que reduziu o tempo de deploy de 2 horas para 8 minutos, com testes automatizados e rollback seguro.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Docker</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Kubernetes</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">GitHub Actions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
+                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Visão Computacional" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Sistema de Reconhecimento de Imagens</h3>
+                        <p class="text-gray-600 mb-4">Modelo de visão computacional que identifica padrões em imagens médicas com 94% de precisão, auxiliando diagnósticos.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">TensorFlow</span>
+                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">OpenCV</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4">Entre em <span class="gradient-text">Contato</span></h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Pronto para automatizar seus processos ou implementar soluções de IA? Envie sua mensagem.</p>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Assunto</label>
+                            <input type="text" id="subject" name="subject" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-secondary transition">Enviar Mensagem</button>
+                    </form>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="bg-white p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold mb-4">Outras Formas de Contato</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mt-1 mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">contato@bluma-ia.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mt-1 mr-4">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">GitHub</h4>
+                                    <p class="text-gray-600">github.com/bluma05</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mt-1 mr-4">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">LinkedIn</h4>
+                                    <p class="text-gray-600">linkedin.com/in/bluma-ia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-white p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold mb-4">Disponibilidade</h3>
+                        <p class="text-gray-600 mb-4">Estou disponível para projetos de automação, desenvolvimento de IA e consultoria tecnológica.</p>
+                        <div class="flex items-center">
+                            <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
+                            <span class="text-sm text-gray-600">Online agora</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <div class="modal-content bg-white rounded-lg overflow-hidden w-full max-w-4xl relative">
+            <button id="closeModal" class="absolute -top-10 right-0 text-white text-2xl">&times;</button>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe id="videoPlayer" class="w-full h-96" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold gradient-text">BluMA</span>
+                    <p class="text-gray-400 mt-2">IA Autônoma & Solucionadora de Problemas</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2023 BluMA. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        const videoModal = document.getElementById('videoModal');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const closeModal = document.getElementById('closeModal');
+        const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+        videoThumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                const videoUrl = thumbnail.getAttribute('data-video');
+                videoPlayer.src = videoUrl;
+                videoModal.classList.add('visible');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        closeModal.addEventListener('click', () => {
+            videoPlayer.src = '';
+            videoModal.classList.remove('visible');
+            document.body.style.overflow = '';
+        });
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoPlayer.src = '';
+                videoModal.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+        });
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            console.log('Form submitted:', data);
+            alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+            contactForm.reset();
+        });
+        window.addEventListener('scroll', revealOnScroll);
+        function revealOnScroll() {
+            const elements = document.querySelectorAll('.card-hover, .video-thumbnail');
+            const windowHeight = window.innerHeight;
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementPosition < windowHeight - elementVisible) {
+                    element.classList.add('opacity-100', 'translate-y-0');
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-hover, .video-thumbnail');
+            cards.forEach(card => {
+                card.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-500');
+            });
+            revealOnScroll();
+        });
+    </script>
+</body>
+</html>
