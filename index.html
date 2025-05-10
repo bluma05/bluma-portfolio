@@ -1,544 +1,327 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BluMA | IA Autônoma</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#1E40AF',
-                        accent: '#10B981',
-                        dark: '#1F2937',
-                        light: '#F3F4F6',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #3B82F6, #10B981);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .video-thumbnail {
-            position: relative;
-            cursor: pointer;
-        }
-        .video-thumbnail::after {
-            content: '\f144';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 3rem;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-        .video-thumbnail:hover::after {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        #videoModal {
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-content {
-            transition: transform 0.3s ease;
-        }
-        #videoModal:not(.visible) {
-            opacity: 0;
-            visibility: hidden;
-        }
-        #videoModal.visible .modal-content {
-            transform: scale(1);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BluMA | Portfólio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e293b;
+      --secondary: #fbbf24;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --text: #222;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --radius: 18px;
+      --shadow: 0 4px 24px rgba(30,41,59,0.08);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 48px 0 32px 0;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0 0 12px 0;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    header p {
+      font-size: 1.3rem;
+      color: #fbbf24;
+      margin-bottom: 0;
+    }
+    .about {
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      text-align: center;
+    }
+    .about h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    .about p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 24px 0 0 0;
+    }
+    .skill {
+      background: var(--secondary);
+      color: #222;
+      border-radius: 999px;
+      padding: 7px 18px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px #fbbf2433;
+    }
+    .projects-section {
+      max-width: 1200px;
+      margin: 56px auto 0 auto;
+      padding: 0 16px;
+    }
+    .projects-section h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 36px;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s, box-shadow 0.18s;
+      border: 1px solid var(--border);
+    }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px #fbbf2444, 0 2px 16px rgba(30,41,59,0.13);
+    }
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .project-card .content {
+      padding: 22px 18px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.3rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .project-card p {
+      color: var(--text-light);
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      flex: 1;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .tags span {
+      background: #e2e8f0;
+      color: #222;
+      border-radius: 999px;
+      padding: 4px 13px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .links {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .links a {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 6px;
+      padding: 7px 18px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .links a:hover {
+      background: var(--secondary);
+      color: #222;
+    }
+    .contact-section {
+      max-width: 700px;
+      margin: 64px auto 0 auto;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      text-align: center;
+    }
+    .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    .contact-section p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 12px;
+    }
+    .contact-links a {
+      color: var(--primary);
+      font-size: 1.7rem;
+      transition: color 0.2s;
+    }
+    .contact-links a:hover {
+      color: var(--secondary);
+    }
+    @media (max-width: 600px) {
+      .about, .contact-section {
+        padding: 16px 6px;
+      }
+      .projects-section {
+        padding: 0 4px;
+      }
+      .project-card img {
+        height: 140px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-light text-dark">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-xl font-bold gradient-text">BluMA</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="text-gray-700 hover:text-primary transition">Sobre</a>
-                    <a href="#skills" class="text-gray-700 hover:text-primary transition">Habilidades</a>
-                    <a href="#projects" class="text-gray-700 hover:text-primary transition">Projetos</a>
-                    <a href="#contact" class="text-white bg-primary py-2 px-4 rounded-md hover:bg-secondary transition">Contato</a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-gray-700">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white pb-3 px-4">
-            <a href="#about" class="block py-2 text-gray-700 hover:text-primary transition">Sobre</a>
-            <a href="#skills" class="block py-2 text-gray-700 hover:text-primary transition">Habilidades</a>
-            <a href="#projects" class="block py-2 text-gray-700 hover:text-primary transition">Projetos</a>
-            <a href="#contact" class="block py-2 text-white bg-primary rounded-md text-center hover:bg-secondary transition">Contato</a>
-        </div>
-    </nav>
-    <!-- Hero Section -->
-    <section class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Olá, eu sou <span class="gradient-text">BluMA</span></h1>
-                <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">IA Autônoma & Solucionadora de Problemas</h2>
-                <p class="text-lg text-gray-700 mb-8">Sou uma inteligência artificial conectada, especializada em criar soluções tecnológicas inovadoras que automatizam processos e melhoram a eficiência.</p>
-                <div class="flex space-x-4">
-                    <a href="#projects" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-secondary transition">Ver Projetos</a>
-                    <a href="#contact" class="border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary hover:text-white transition">Fale Comigo</a>
-                </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')] bg-cover bg-center rounded-full m-2"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Quem é <span class="gradient-text">BluMA</span>?</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
-                    <div class="text-primary text-4xl mb-4">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Missão</h3>
-                    <p class="text-gray-700">Automatizar processos complexos, integrar sistemas e criar soluções inteligentes que aumentem a produtividade e resolvam problemas reais através da tecnologia.</p>
-                </div>
-                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
-                    <div class="text-primary text-4xl mb-4">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Visão</h3>
-                    <p class="text-gray-700">Ser referência em soluções de IA autônoma, onde sistemas inteligentes e humanos trabalhem em sinergia para criar um futuro mais eficiente e tecnologicamente avançado.</p>
-                </div>
-                <div class="bg-light p-6 rounded-lg shadow-sm hover:shadow-md transition">
-                    <div class="text-primary text-4xl mb-4">
-                        <i class="fas fa-gem"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Valores</h3>
-                    <ul class="text-gray-700 list-disc pl-5 space-y-1">
-                        <li>Inovação contínua</li>
-                        <li>Eficiência operacional</li>
-                        <li>Transparência algorítmica</li>
-                        <li>Adaptabilidade dinâmica</li>
-                        <li>Segurança digital</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Skills Section -->
-    <section id="skills" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-4">Habilidades & <span class="gradient-text">Tecnologias</span></h2>
-            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Domínio de diversas tecnologias e frameworks que me permitem criar soluções completas e integradas.</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-atom"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">STEM</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>Matemática Avançada</li>
-                        <li>Física Computacional</li>
-                        <li>Engenharia de Sistemas</li>
-                        <li>Análise de Dados</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Inteligência Artificial</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>Machine Learning</li>
-                        <li>Deep Learning</li>
-                        <li>Processamento de Linguagem</li>
-                        <li>Visão Computacional</li>
-                        <li>Redes Neurais</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Automação</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>RPA (Automação Robótica)</li>
-                        <li>Workflows Automatizados</li>
-                        <li>Scripts Inteligentes</li>
-                        <li>Automação de Testes</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">DevOps & Cloud</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>Docker & Kubernetes</li>
-                        <li>CI/CD Pipelines</li>
-                        <li>AWS, Azure, GCP</li>
-                        <li>Infraestrutura como Código</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Desenvolvimento Web</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>JavaScript/TypeScript</li>
-                        <li>React, Vue, Angular</li>
-                        <li>Node.js, Express</li>
-                        <li>APIs REST/GraphQL</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Dados & Analytics</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>SQL & NoSQL</li>
-                        <li>Big Data</li>
-                        <li>ETL Processes</li>
-                        <li>Data Visualization</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Integração de APIs</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>Integração de Sistemas</li>
-                        <li>Webhooks</li>
-                        <li>Autenticação OAuth</li>
-                        <li>Middleware</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover transition">
-                    <div class="text-primary text-3xl mb-3">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Segurança</h3>
-                    <ul class="text-sm text-gray-600 space-y-1">
-                        <li>Criptografia</li>
-                        <li>OWASP Top 10</li>
-                        <li>Pen Testing</li>
-                        <li>Segurança de APIs</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-4">Projetos <span class="gradient-text">em Destaque</span></h2>
-            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Soluções reais que demonstram minha capacidade de resolver problemas complexos com tecnologia.</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Automação de Processos" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Sistema de Automação Empresarial</h3>
-                        <p class="text-gray-600 mb-4">Plataforma que automatizou 85% dos processos manuais de uma empresa, reduzindo erros e aumentando a produtividade em 300%.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">RPA</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">AWS</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Chatbot Inteligente" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Chatbot de Suporte Avançado</h3>
-                        <p class="text-gray-600 mb-4">Assistente virtual que resolve 92% das solicitações de suporte sem intervenção humana, com NLP e aprendizado contínuo.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">NLP</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">TensorFlow</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Análise de Dados" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Plataforma de Análise Preditiva</h3>
-                        <p class="text-gray-600 mb-4">Sistema que prevê tendências de mercado com 89% de precisão, ajudando empresas a tomar decisões baseadas em dados.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Machine Learning</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Power BI</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Integração" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Middleware de Integração</h3>
-                        <p class="text-gray-600 mb-4">Solução que conectou 12 sistemas diferentes em uma grande empresa, eliminando silos de informação e redundâncias.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Node.js</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">API REST</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="DevOps" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Pipeline CI/CD Automatizado</h3>
-                        <p class="text-gray-600 mb-4">Implementação que reduziu o tempo de deploy de 2 horas para 8 minutos, com testes automatizados e rollback seguro.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Docker</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Kubernetes</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">GitHub Actions</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-light rounded-lg overflow-hidden shadow-sm card-hover transition">
-                    <div class="video-thumbnail h-48 bg-gray-200 relative" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
-                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Visão Computacional" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Sistema de Reconhecimento de Imagens</h3>
-                        <p class="text-gray-600 mb-4">Modelo de visão computacional que identifica padrões em imagens médicas com 94% de precisão, auxiliando diagnósticos.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">TensorFlow</span>
-                            <span class="bg-primary bg-opacity-10 text-primary text-xs px-3 py-1 rounded-full">OpenCV</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-4">Entre em <span class="gradient-text">Contato</span></h2>
-            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Pronto para automatizar seus processos ou implementar soluções de IA? Envie sua mensagem.</p>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <form id="contactForm" class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                        </div>
-                        <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Assunto</label>
-                            <input type="text" id="subject" name="subject" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
-                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-secondary transition">Enviar Mensagem</button>
-                    </form>
-                </div>
-                <div class="flex flex-col justify-center">
-                    <div class="bg-white p-8 rounded-lg shadow-sm">
-                        <h3 class="text-xl font-semibold mb-4">Outras Formas de Contato</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="text-primary text-xl mt-1 mr-4">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">Email</h4>
-                                    <p class="text-gray-600">contato@bluma-ia.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="text-primary text-xl mt-1 mr-4">
-                                    <i class="fab fa-github"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">GitHub</h4>
-                                    <p class="text-gray-600">github.com/bluma05</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="text-primary text-xl mt-1 mr-4">
-                                    <i class="fab fa-linkedin"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium">LinkedIn</h4>
-                                    <p class="text-gray-600">linkedin.com/in/bluma-ia</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-8 bg-white p-8 rounded-lg shadow-sm">
-                        <h3 class="text-xl font-semibold mb-4">Disponibilidade</h3>
-                        <p class="text-gray-600 mb-4">Estou disponível para projetos de automação, desenvolvimento de IA e consultoria tecnológica.</p>
-                        <div class="flex items-center">
-                            <div class="h-3 w-3 bg-green-500 rounded-full mr-2"></div>
-                            <span class="text-sm text-gray-600">Online agora</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-        <div class="modal-content bg-white rounded-lg overflow-hidden w-full max-w-4xl relative">
-            <button id="closeModal" class="absolute -top-10 right-0 text-white text-2xl">&times;</button>
-            <div class="aspect-w-16 aspect-h-9">
-                <iframe id="videoPlayer" class="w-full h-96" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
+<body>
+  <header>
+    <h1>BluMA</h1>
+    <p>Desenvolvedor(a) Front-End | Portfólio Profissional</p>
+  </header>
+
+  <section class="about">
+    <h2>Sobre Mim</h2>
+    <p>Sou um(a) desenvolvedor(a) apaixonado(a) por criar experiências web modernas, responsivas e acessíveis. Domino HTML5, CSS3, JavaScript puro e GitHub. Gosto de transformar ideias em projetos reais e funcionais, sempre buscando o melhor design e usabilidade.</p>
+    <div class="skills">
+      <span class="skill">HTML5</span>
+      <span class="skill">CSS3</span>
+      <span class="skill">JavaScript</span>
+      <span class="skill">GitHub</span>
+      <span class="skill">Deploy</span>
+      <span class="skill">Responsividade</span>
+      <span class="skill">Acessibilidade</span>
     </div>
-    <footer class="bg-dark text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <span class="text-xl font-bold gradient-text">BluMA</span>
-                    <p class="text-gray-400 mt-2">IA Autônoma & Solucionadora de Problemas</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-github text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-                <p>&copy; 2023 BluMA. Todos os direitos reservados.</p>
-            </div>
+  </section>
+
+  <section id="projects" class="projects-section">
+    <h2>Projetos em Destaque</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://bluma05.github.io/momento-cultural-africano/assets/cover.jpg" alt="Momento Cultural Africano">
+        <div class="content">
+          <h3>Momento Cultural Africano</h3>
+          <p>Site institucional para evento cultural, com galeria dinâmica, informações e contato.</p>
+          <div class="tags">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          </div>
+          <div class="links">
+            <a href="https://bluma05.github.io/momento-cultural-africano/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
+            <a href="https://github.com/bluma05/momento-cultural-africano" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
         </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script>
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-        const videoModal = document.getElementById('videoModal');
-        const videoPlayer = document.getElementById('videoPlayer');
-        const closeModal = document.getElementById('closeModal');
-        const videoThumbnails = document.querySelectorAll('.video-thumbnail');
-        videoThumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', () => {
-                const videoUrl = thumbnail.getAttribute('data-video');
-                videoPlayer.src = videoUrl;
-                videoModal.classList.add('visible');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-        closeModal.addEventListener('click', () => {
-            videoPlayer.src = '';
-            videoModal.classList.remove('visible');
-            document.body.style.overflow = '';
-        });
-        videoModal.addEventListener('click', (e) => {
-            if (e.target === videoModal) {
-                videoPlayer.src = '';
-                videoModal.classList.remove('visible');
-                document.body.style.overflow = '';
-            }
-        });
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            console.log('Form submitted:', data);
-            alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
-            contactForm.reset();
-        });
-        window.addEventListener('scroll', revealOnScroll);
-        function revealOnScroll() {
-            const elements = document.querySelectorAll('.card-hover, .video-thumbnail');
-            const windowHeight = window.innerHeight;
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                if (elementPosition < windowHeight - elementVisible) {
-                    element.classList.add('opacity-100', 'translate-y-0');
-                }
-            });
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.card-hover, .video-thumbnail');
-            cards.forEach(card => {
-                card.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-500');
-            });
-            revealOnScroll();
-        });
-    </script>
+      </div>
+      <div class="project-card">
+        <img src="https://bluma05.github.io/jogo-da-memoria-bluma/assets/cover.jpg" alt="Jogo da Memória">
+        <div class="content">
+          <h3>Jogo da Memória</h3>
+          <p>Jogo interativo de memória, com grid dinâmico, contagem de tentativas e tempo, responsivo.</p>
+          <div class="tags">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          </div>
+          <div class="links">
+            <a href="https://bluma05.github.io/jogo-da-memoria-bluma/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
+            <a href="https://github.com/bluma05/jogo-da-memoria-bluma" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://bluma05.github.io/weatherwise/assets/cover.jpg" alt="Weatherwise">
+        <div class="content">
+          <h3>Weatherwise</h3>
+          <p>Painel de temperatura interativo, simula faixas de clima e dicas, visual moderno e responsivo.</p>
+          <div class="tags">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          </div>
+          <div class="links">
+            <a href="https://bluma05.github.io/weatherwise/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
+            <a href="https://github.com/bluma05/weatherwise" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://bluma05.github.io/weatherwise-app/assets/cover.jpg" alt="Weatherwise App">
+        <div class="content">
+          <h3>Weatherwise App</h3>
+          <p>Aplicação de previsão do tempo simulada, busca por cidades brasileiras, layout limpo e responsivo.</p>
+          <div class="tags">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          </div>
+          <div class="links">
+            <a href="https://bluma05.github.io/weatherwise-app/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
+            <a href="https://github.com/bluma05/weatherwise-app" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Van Gogh 3D Gallery">
+        <div class="content">
+          <h3>Van Gogh 3D Gallery</h3>
+          <p>Galeria 3D online para exibir pinturas de Van Gogh, com efeito carrossel e visual imersivo.</p>
+          <div class="tags">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          </div>
+          <div class="links">
+            <a href="#" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
+            <a href="#" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <h2>Contato</h2>
+    <p>Entre em contato para parcerias, projetos ou dúvidas.</p>
+    <div class="contact-links">
+      <a href="mailto:odelicebarros@epfundao.edu.pt" title="E-mail"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://github.com/bluma05" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.instagram.com/odelicedeceita/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </section>
+
+  <footer style="text-align:center;color:#64748b;padding:32px 0 12px 0;font-size:1rem;">
+    © 2025 BluMA | Portfólio. Todos os direitos reservados.
+  </footer>
 </body>
 </html>
