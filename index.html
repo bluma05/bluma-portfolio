@@ -1,327 +1,393 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BluMA | Portfólio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1e293b;
-      --secondary: #fbbf24;
-      --bg: #f8fafc;
-      --card-bg: #fff;
-      --text: #222;
-      --text-light: #64748b;
-      --border: #e2e8f0;
-      --radius: 18px;
-      --shadow: 0 4px 24px rgba(30,41,59,0.08);
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Montserrat', Arial, sans-serif;
-      margin: 0;
-      min-height: 100vh;
-    }
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 48px 0 32px 0;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 2.8rem;
-      margin: 0 0 12px 0;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    header p {
-      font-size: 1.3rem;
-      color: #fbbf24;
-      margin-bottom: 0;
-    }
-    .about {
-      max-width: 700px;
-      margin: 40px auto 0 auto;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 32px 28px;
-      text-align: center;
-    }
-    .about h2 {
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
-    .about p {
-      color: var(--text-light);
-      font-size: 1.1rem;
-      margin-bottom: 0;
-    }
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin: 24px 0 0 0;
-    }
-    .skill {
-      background: var(--secondary);
-      color: #222;
-      border-radius: 999px;
-      padding: 7px 18px;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px #fbbf2433;
-    }
-    .projects-section {
-      max-width: 1200px;
-      margin: 56px auto 0 auto;
-      padding: 0 16px;
-    }
-    .projects-section h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      color: var(--primary);
-      margin-bottom: 36px;
-    }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
-    }
-    .project-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.18s, box-shadow 0.18s;
-      border: 1px solid var(--border);
-    }
-    .project-card:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 8px 32px #fbbf2444, 0 2px 16px rgba(30,41,59,0.13);
-    }
-    .project-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: #eee;
-    }
-    .project-card .content {
-      padding: 22px 18px 18px 18px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card h3 {
-      margin: 0 0 10px 0;
-      font-size: 1.3rem;
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .project-card p {
-      color: var(--text-light);
-      font-size: 1.05rem;
-      margin-bottom: 14px;
-      flex: 1;
-    }
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .tags span {
-      background: #e2e8f0;
-      color: #222;
-      border-radius: 999px;
-      padding: 4px 13px;
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-    .links {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
-    }
-    .links a {
-      background: var(--primary);
-      color: #fff;
-      border-radius: 6px;
-      padding: 7px 18px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: background 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .links a:hover {
-      background: var(--secondary);
-      color: #222;
-    }
-    .contact-section {
-      max-width: 700px;
-      margin: 64px auto 0 auto;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 32px 28px;
-      text-align: center;
-    }
-    .contact-section h2 {
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: var(--primary);
-    }
-    .contact-section p {
-      color: var(--text-light);
-      font-size: 1.1rem;
-      margin-bottom: 18px;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-top: 12px;
-    }
-    .contact-links a {
-      color: var(--primary);
-      font-size: 1.7rem;
-      transition: color 0.2s;
-    }
-    .contact-links a:hover {
-      color: var(--secondary);
-    }
-    @media (max-width: 600px) {
-      .about, .contact-section {
-        padding: 16px 6px;
-      }
-      .projects-section {
-        padding: 0 4px;
-      }
-      .project-card img {
-        height: 140px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluMA | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS for animations and effects */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>BluMA</h1>
-    <p>Desenvolvedor(a) Front-End | Portfólio Profissional</p>
-  </header>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-indigo-600">BluMA</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                    <a href="#projects" class="text-gray-700 hover:text-indigo-600 transition">Projetos</a>
+                    <a href="#contact" class="text-gray-700 hover:text-indigo-600 transition">Contato</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-gray-700">
+                        <i class="h-6 w-6" data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4 px-4 shadow-md">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Home</a>
+            <a href="#projects" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Projetos</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-indigo-600 transition">Contato</a>
+        </div>
+    </nav>
 
-  <section class="about">
-    <h2>Sobre Mim</h2>
-    <p>Sou um(a) desenvolvedor(a) apaixonado(a) por criar experiências web modernas, responsivas e acessíveis. Domino HTML5, CSS3, JavaScript puro e GitHub. Gosto de transformar ideias em projetos reais e funcionais, sempre buscando o melhor design e usabilidade.</p>
-    <div class="skills">
-      <span class="skill">HTML5</span>
-      <span class="skill">CSS3</span>
-      <span class="skill">JavaScript</span>
-      <span class="skill">GitHub</span>
-      <span class="skill">Deploy</span>
-      <span class="skill">Responsividade</span>
-      <span class="skill">Acessibilidade</span>
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0 fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Olá, eu sou <span class="text-indigo-600">BluMA</span></h1>
+                <h2 class="text-xl md:text-2xl text-gray-600 mb-6">Desenvolvedora Full Stack</h2>
+                <p class="text-gray-600 mb-8 max-w-lg">
+                    Sou uma desenvolvedora apaixonada por criar soluções digitais elegantes e funcionais. 
+                    Combinando design e código para construir experiências incríveis na web.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#projects" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition shadow-md">
+                        Ver Projetos
+                    </a>
+                    <a href="#contact" class="border border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-6 py-3 rounded-lg transition">
+                        Contato
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in" style="animation-delay: 0.2s;">
+                <div class="bg-indigo-100 rounded-full p-2 w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+                    <div class="w-full h-full bg-indigo-200 rounded-full flex items-center justify-center text-indigo-400">
+                        <i class="fas fa-user text-8xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto bg-white">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Meus Projetos</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Aqui estão alguns dos projetos que desenvolvi. Cada um representa um desafio único e uma oportunidade de aprendizado.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project 1 -->
+            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden fade-in" style="animation-delay: 0.1s;">
+                <div class="h-48 bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-project-diagram text-6xl text-indigo-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">TaskFlow</h3>
+                    <p class="text-gray-600 mb-4">
+                        Aplicativo de gerenciamento de tarefas com arrastar e soltar, lembretes e colaboração em equipe.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">React</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Node.js</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">MongoDB</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Demo
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-gray-800 text-sm font-medium">
+                            <i class="fab fa-github mr-1"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden fade-in" style="animation-delay: 0.2s;">
+                <div class="h-48 bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-shopping-cart text-6xl text-indigo-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">EcoMarket</h3>
+                    <p class="text-gray-600 mb-4">
+                        Plataforma de e-commerce sustentável com filtros avançados, avaliações e pagamento integrado.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Vue.js</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Laravel</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">MySQL</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Demo
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-gray-800 text-sm font-medium">
+                            <i class="fab fa-github mr-1"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card bg-white rounded-xl shadow-md overflow-hidden fade-in" style="animation-delay: 0.3s;">
+                <div class="h-48 bg-indigo-100 flex items-center justify-center">
+                    <i class="fas fa-chart-line text-6xl text-indigo-400"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">FinTrack</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de gestão financeira pessoal com gráficos interativos, metas e relatórios personalizados.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">Angular</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">NestJS</span>
+                        <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full">PostgreSQL</span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Demo
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-gray-800 text-sm font-medium">
+                            <i class="fab fa-github mr-1"></i> Código
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Vamos Conversar</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Estou aberta a novas oportunidades e colaborações. Entre em contato se quiser discutir um projeto ou apenas dizer olá!
+            </p>
+        </div>
+        
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden fade-in">
+            <div class="p-8">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                        <input type="text" id="name" name="name" required 
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                        <input type="email" id="email" name="email" required 
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                        <textarea id="message" name="message" rows="4" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+                    </div>
+                    <button type="submit" 
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition shadow-md">
+                        Enviar Mensagem
+                    </button>
+                </form>
+                
+                <div class="mt-8 pt-8 border-t border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Ou entre em contato diretamente</h3>
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-600 mr-3"></i>
+                            <span class="text-gray-600">contato@bluma.dev</span>
+                        </div>
+                        <div class="flex space-x-6 justify-center mt-4">
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" aria-label="GitHub">
+                                <i class="fab fa-github text-2xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-600 transition" aria-label="Twitter">
+                                <i class="fab fa-twitter text-2xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold text-indigo-600">BluMA</span>
+                    <p class="text-gray-600 mt-1">Desenvolvedora Full Stack</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+                    <a href="#projects" class="text-gray-600 hover:text-indigo-600 transition">Projetos</a>
+                    <a href="#contact" class="text-gray-600 hover:text-indigo-600 transition">Contato</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+                <p>© 2023 BluMA. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-indigo-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Success modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 invisible transition-opacity duration-300">
+        <div class="bg-white rounded-xl p-8 max-w-md mx-4 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Mensagem enviada!</h3>
+            <p class="text-gray-600 mb-6">Obrigada pelo seu contato. Responderei o mais breve possível.</p>
+            <button id="close-modal" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition">
+                Fechar
+            </button>
+        </div>
     </div>
-  </section>
 
-  <section id="projects" class="projects-section">
-    <h2>Projetos em Destaque</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="https://bluma05.github.io/momento-cultural-africano/assets/cover.jpg" alt="Momento Cultural Africano">
-        <div class="content">
-          <h3>Momento Cultural Africano</h3>
-          <p>Site institucional para evento cultural, com galeria dinâmica, informações e contato.</p>
-          <div class="tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
-          </div>
-          <div class="links">
-            <a href="https://bluma05.github.io/momento-cultural-africano/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
-            <a href="https://github.com/bluma05/momento-cultural-africano" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card">
-        <img src="https://bluma05.github.io/jogo-da-memoria-bluma/assets/cover.jpg" alt="Jogo da Memória">
-        <div class="content">
-          <h3>Jogo da Memória</h3>
-          <p>Jogo interativo de memória, com grid dinâmico, contagem de tentativas e tempo, responsivo.</p>
-          <div class="tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
-          </div>
-          <div class="links">
-            <a href="https://bluma05.github.io/jogo-da-memoria-bluma/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
-            <a href="https://github.com/bluma05/jogo-da-memoria-bluma" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card">
-        <img src="https://bluma05.github.io/weatherwise/assets/cover.jpg" alt="Weatherwise">
-        <div class="content">
-          <h3>Weatherwise</h3>
-          <p>Painel de temperatura interativo, simula faixas de clima e dicas, visual moderno e responsivo.</p>
-          <div class="tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
-          </div>
-          <div class="links">
-            <a href="https://bluma05.github.io/weatherwise/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
-            <a href="https://github.com/bluma05/weatherwise" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card">
-        <img src="https://bluma05.github.io/weatherwise-app/assets/cover.jpg" alt="Weatherwise App">
-        <div class="content">
-          <h3>Weatherwise App</h3>
-          <p>Aplicação de previsão do tempo simulada, busca por cidades brasileiras, layout limpo e responsivo.</p>
-          <div class="tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
-          </div>
-          <div class="links">
-            <a href="https://bluma05.github.io/weatherwise-app/" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
-            <a href="https://github.com/bluma05/weatherwise-app" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Van Gogh 3D Gallery">
-        <div class="content">
-          <h3>Van Gogh 3D Gallery</h3>
-          <p>Galeria 3D online para exibir pinturas de Van Gogh, com efeito carrossel e visual imersivo.</p>
-          <div class="tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
-          </div>
-          <div class="links">
-            <a href="#" target="_blank"><i class="fa-solid fa-globe"></i>Ver Site</a>
-            <a href="#" target="_blank"><i class="fa-brands fa-github"></i>GitHub</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <h2>Contato</h2>
-    <p>Entre em contato para parcerias, projetos ou dúvidas.</p>
-    <div class="contact-links">
-      <a href="mailto:odelicebarros@epfundao.edu.pt" title="E-mail"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://github.com/bluma05" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.instagram.com/odelicedeceita/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    </div>
-  </section>
-
-  <footer style="text-align:center;color:#64748b;padding:32px 0 12px 0;font-size:1rem;">
-    © 2025 BluMA | Portfólio. Todos os direitos reservados.
-  </footer>
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        const successModal = document.getElementById('success-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show the success modal
+            successModal.classList.remove('opacity-0', 'invisible');
+            successModal.classList.add('opacity-100', 'visible');
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        closeModalBtn.addEventListener('click', () => {
+            successModal.classList.remove('opacity-100', 'visible');
+            successModal.classList.add('opacity-0', 'invisible');
+        });
+        
+        // Close modal when clicking outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.remove('opacity-100', 'visible');
+                successModal.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Run once on page load
+        fadeInOnScroll();
+        
+        // Run on scroll
+        window.addEventListener('scroll', fadeInOnScroll);
+    </script>
 </body>
 </html>
